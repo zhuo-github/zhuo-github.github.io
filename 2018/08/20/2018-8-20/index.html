@@ -79,13 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="MyBlog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="一 、CountDownLatch（等待多线程完成）1.1 构造方法​    CountDownLatch(int count) 构造一个用给定计数初始化的 CountDownLatch。 ​    （count：传入一个计数值） 1.2 两个重要的方法​    （1）void countDown() 递减锁存器的计数值（count），如果计数到达零，则释放所有等待的线程。 ​    （2）voi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="同步辅助类">
+<meta property="og:url" content="http://yoursite.com/2018/08/20/2018-8-20/index.html">
 <meta property="og:site_name" content="MyBlog">
+<meta property="og:description" content="一 、CountDownLatch（等待多线程完成）1.1 构造方法​    CountDownLatch(int count) 构造一个用给定计数初始化的 CountDownLatch。 ​    （count：传入一个计数值） 1.2 两个重要的方法​    （1）void countDown() 递减锁存器的计数值（count），如果计数到达零，则释放所有等待的线程。 ​    （2）voi">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-20T06:59:13.330Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MyBlog">
+<meta name="twitter:title" content="同步辅助类">
+<meta name="twitter:description" content="一 、CountDownLatch（等待多线程完成）1.1 构造方法​    CountDownLatch(int count) 构造一个用给定计数初始化的 CountDownLatch。 ​    （count：传入一个计数值） 1.2 两个重要的方法​    （1）void countDown() 递减锁存器的计数值（count），如果计数到达零，则释放所有等待的线程。 ​    （2）voi">
 
 
 
@@ -115,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/20/2018-8-20/"/>
 
 
 
 
 
-  <title>MyBlog</title>
+  <title>同步辅助类 | MyBlog</title>
   
 
 
@@ -140,8 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -224,9 +227,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -256,9 +259,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/20/2018-8-20/" itemprop="url">同步辅助类</a></h1>
+          <h1 class="post-title" itemprop="name headline">同步辅助类</h1>
         
 
         <div class="post-meta">
@@ -308,9 +309,7 @@
       
 
       
-        
-          
-            <h3 id="一-、CountDownLatch（等待多线程完成）"><a href="#一-、CountDownLatch（等待多线程完成）" class="headerlink" title="一 、CountDownLatch（等待多线程完成）"></a>一 、CountDownLatch（等待多线程完成）</h3><h4 id="1-1-构造方法"><a href="#1-1-构造方法" class="headerlink" title="1.1 构造方法"></a>1.1 构造方法</h4><p>​    CountDownLatch(int count) 构造一个用给定计数初始化的 CountDownLatch。</p>
+        <h3 id="一-、CountDownLatch（等待多线程完成）"><a href="#一-、CountDownLatch（等待多线程完成）" class="headerlink" title="一 、CountDownLatch（等待多线程完成）"></a>一 、CountDownLatch（等待多线程完成）</h3><h4 id="1-1-构造方法"><a href="#1-1-构造方法" class="headerlink" title="1.1 构造方法"></a>1.1 构造方法</h4><p>​    CountDownLatch(int count) 构造一个用给定计数初始化的 CountDownLatch。</p>
 <p>​    （count：传入一个计数值）</p>
 <h4 id="1-2-两个重要的方法"><a href="#1-2-两个重要的方法" class="headerlink" title="1.2 两个重要的方法"></a>1.2 两个重要的方法</h4><p>​    （1）void countDown() 递减锁存器的计数值（count），如果计数到达零，则释放所有等待的线程。</p>
 <p>​    （2）void await() 如果锁存器的计数值（count）不为0，则当前线程就一直等待。</p>
@@ -345,8 +344,6 @@
 <p>​    通过多次结果显示，我们可以看到线程0和线程1执行了许可部分，而线程2却阻塞不执行，只有等到线程0执行结束了，线程2才可以执行。（实际上在第一个0打印在控制台之前，线程2就开始执行了，但是因为线程2acquire方法和release方法之间的部分阻塞了，所以，线程2虽然执行了，但是什么都不显示）</p>
 <p>​    根据以上结果的执行流程：线程0执行，打印“线程开始了”，然后休眠-&gt;线程1抢到执行的机会，打印“线程开始了”，然后休眠-&gt;线程2抢到了执行的机会，但是因为Semaphore阻塞-&gt;线程0抢到执行机会，打印“线程结束了”，线程0执行完毕-&gt;线程2抢到执行机会，打印“线程开始了”（线程0已经通过release方法释放了许可），然后休眠-&gt;线程1抢到执行的机会了，打印“线程结束了”，线程1执行完毕-&gt;线程2抢到执行的机会了，打印“线程结束了”，线程2执行完毕</p>
 
-          
-        
       
     </div>
     
@@ -363,421 +360,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/03/JVM_GC(2)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="卓灿和">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MyBlog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/03/JVM_GC(2)/" itemprop="url">JVM垃圾回收机制（二）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-03T08:40:37+08:00">
-                2018-08-03
-              </time>
+              <a href="/2018/08/03/JVM_GC(2)/" rel="next" title="JVM垃圾回收机制（二）">
+                <i class="fa fa-chevron-left"></i> JVM垃圾回收机制（二）
+              </a>
             
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="一、垃圾回收（GC）算法"><a href="#一、垃圾回收（GC）算法" class="headerlink" title="一、垃圾回收（GC）算法"></a>一、垃圾回收（GC）算法</h3><h4 id="1-1-标记-清除算法"><a href="#1-1-标记-清除算法" class="headerlink" title="1.1 标记-清除算法"></a>1.1 标记-清除算法</h4><p>​    标记需回收对象，标记完后统一进行回收。</p>
-<p>​    回收前：</p>
-<p><img src="/images/内存初始状况.jpg" alt=""></p>
-<p>​    回收后：</p>
-<p><img src="/images/标记-清除.jpg" alt=""></p>
-<p>​    缺点：①产生不连续空间。</p>
-<h4 id="1-2-复制算法"><a href="#1-2-复制算法" class="headerlink" title="1.2 复制算法"></a>1.2 复制算法</h4><p>​    等分两个内存空间，轮流将一个空间的存活对象复制到另外一个空间，然后清除另外一个空间。</p>
-<p>​    回收前：</p>
-<p><img src="/images/复制前.jpg" alt=""></p>
-<p>​    回收后：</p>
-<p><img src="/images/复制后.jpg" alt=""></p>
-<p>​    缺点：空间代价太高</p>
-<h4 id="1-3-标记-整理算法"><a href="#1-3-标记-整理算法" class="headerlink" title="1.3 标记-整理算法"></a>1.3 标记-整理算法</h4><p>​    标记需要回收对象，清除标记对象，然后对内存空间进行整理。</p>
-<p>​    回收前：</p>
-<p><img src="/images/内存初始状况.jpg" alt=""></p>
-<p><img src="/images/标记-整理.jpg" alt=""></p>
-<p>​    缺点：解决了内存碎片问题，但是效率变低了。</p>
-<h4 id="1-4-分代收集算法（重点）"><a href="#1-4-分代收集算法（重点）" class="headerlink" title="1.4 分代收集算法（重点）"></a>1.4 分代收集算法（重点）</h4><h5 id="1-4-1-新生代（采用复制算法）"><a href="#1-4-1-新生代（采用复制算法）" class="headerlink" title="1.4.1 新生代（采用复制算法）"></a>1.4.1 新生代（采用复制算法）</h5><p>​    伊甸园（Eden）：新对象总是在这里生成，然后经过一次垃圾回收（Minor GC）后，将其复制进存活区。（对象生成很频繁，有些对象朝生夕死）</p>
-<p>​    存活区（survivor ）：存活区有两个（s0/s1），每进行一次垃圾回收都会将Eden和其中一个存活（如：s0）取的对象复制到另外一个存活区（如：s1）中，然后清空Eden和被复制的存活区（如：Eden和s0被清空）</p>
-<h5 id="1-4-2-老年代（采用标记-整理算法）"><a href="#1-4-2-老年代（采用标记-整理算法）" class="headerlink" title="1.4.2 老年代（采用标记-整理算法）"></a>1.4.2 老年代（采用标记-整理算法）</h5><p>​    新生代经过N次回收后仍没有被清除则会进入老年代</p>
-<h5 id="1-4-3-新生代GC（Minor-GC）和全局GC（Full-GC）"><a href="#1-4-3-新生代GC（Minor-GC）和全局GC（Full-GC）" class="headerlink" title="1.4.3 新生代GC（Minor GC）和全局GC（Full GC）"></a>1.4.3 新生代GC（Minor GC）和全局GC（Full GC）</h5><p>​    Minor GC：发生在年轻代的垃圾回收动作。特点：速度快，发动频繁。</p>
-<p>​    Full GC：全局的垃圾回收，会对整个堆进行垃圾回收。</p>
-<p><img src="/images/MinorGC.jpg" alt=""></p>
-<p>​    老年区已满发动Full GC。</p>
-<p>​    老年区空间担保小于Eden每次进行复制所需空间的平均值发动Full GC。</p>
-<h3 id="二、减少GC的次数"><a href="#二、减少GC的次数" class="headerlink" title="二、减少GC的次数"></a>二、减少GC的次数</h3><p>​    ①对象不用时显示设为null。</p>
-<p>​    ②尽量少用System.gc()。</p>
-<p>​    ③尽量少用静态变量。</p>
-<p>​    ④尽量使用StringBuffer少用String</p>
-<p>​    ⑤分散对象创建或者删除</p>
-<p>​    ⑥尽量少用finalize()</p>
-<p>​    ⑦对于经常用到的图片可以使用软引用类型</p>
-<p>​    ⑧能用基本类型就不用引用类型</p>
-<p>​    ⑨增大 -Xmx的值（堆最大值）</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/01/JVM_GC(1)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="卓灿和">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MyBlog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/01/JVM_GC(1)/" itemprop="url">JVM垃圾回收机制（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T18:41:45+08:00">
-                2018-08-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="一、JVM的内存模型"><a href="#一、JVM的内存模型" class="headerlink" title="一、JVM的内存模型"></a>一、JVM的内存模型</h3><p><img src="/images/JVM内存模型.jpg" alt=""></p>
-<h3 id="二、判断内存是否要回收"><a href="#二、判断内存是否要回收" class="headerlink" title="二、判断内存是否要回收"></a>二、判断内存是否要回收</h3><h4 id="2-1-JVM的四种引用"><a href="#2-1-JVM的四种引用" class="headerlink" title="2.1 JVM的四种引用"></a>2.1 JVM的四种引用</h4><h5 id="2-1-1-强引用（“绝不回收”）"><a href="#2-1-1-强引用（“绝不回收”）" class="headerlink" title="2.1.1 强引用（“绝不回收”）"></a>2.1.1 强引用（“绝不回收”）</h5><p>​    只要强引用还在，对象永远不会被回收。（例如：A a=new A()）</p>
-<h5 id="2-1-2-软引用（”内存不足才回收“）"><a href="#2-1-2-软引用（”内存不足才回收“）" class="headerlink" title="2.1.2 软引用（”内存不足才回收“）"></a>2.1.2 软引用（”内存不足才回收“）</h5><p>​    用来描述还有用，但是并非必须的对象。在内存不足（内存溢出之前）会把这些对象进行回收。</p>
-<h5 id="2-1-3-弱引用（“只要被发现就被回收”）"><a href="#2-1-3-弱引用（“只要被发现就被回收”）" class="headerlink" title="2.1.3 弱引用（“只要被发现就被回收”）"></a>2.1.3 弱引用（“只要被发现就被回收”）</h5><p>​    用来描述非必须对象。垃圾收集只要进行垃圾回收，无论内存是否足够都会将这些对象回收</p>
-<h5 id="2-1-4-虚引用（“任何时候都可能被回收”）"><a href="#2-1-4-虚引用（“任何时候都可能被回收”）" class="headerlink" title="2.1.4 虚引用（“任何时候都可能被回收”）"></a>2.1.4 虚引用（“任何时候都可能被回收”）</h5><p>​    虚引用主要用来跟踪对象被垃圾回收器回收的活动。 </p>
-<h4 id="2-2-可达性分析"><a href="#2-2-可达性分析" class="headerlink" title="2.2 可达性分析"></a>2.2 可达性分析</h4><p>​    通过一系列的称为“GCRoots”的对象为起始点，当一个对象到GCRoots没有任何引用链相连，则对象已死。</p>
-<p>​    可达性分析（单弱多强）：</p>
-<p>​        ①单条引用链以最弱的一个引用类型决定。</p>
-<p>​        ②多条引用链以最强的一个引用类型决定。</p>
-<p><img src="/images/可达性分析.jpg" alt=""></p>
-<p>​                                            可达性算法图示</p>
-<p>​    举例：假设上图引用①和③为强引用，⑤为软引用，⑦为弱引用，按照上述规则，路径①、⑤为软引用（单弱），路径③、⑦为弱引用（单弱）。对于路径①、⑤和③、⑦进行分析取最强为软引用。因此Object5为软可及对象。</p>
-<h4 id="2-3-引用计数法"><a href="#2-3-引用计数法" class="headerlink" title="2.3 引用计数法"></a>2.3 引用计数法</h4><p>​    给每一个对象提供一个与之关联的计数器，引用则加一，失效则减一，为零则对象已死。</p>
-<h4 id="2-4-对象死亡前的最后一次挣扎（finalize-）"><a href="#2-4-对象死亡前的最后一次挣扎（finalize-）" class="headerlink" title="2.4 对象死亡前的最后一次挣扎（finalize()）"></a>2.4 对象死亡前的最后一次挣扎（finalize()）</h4>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/29/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="卓灿和">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MyBlog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/29/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T19:02:25+08:00">
-                2018-07-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/07/29/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -787,10 +391,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -798,6 +403,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -818,8 +427,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -870,6 +488,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-、CountDownLatch（等待多线程完成）"><span class="nav-number">1.</span> <span class="nav-text">一 、CountDownLatch（等待多线程完成）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-构造方法"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-两个重要的方法"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 两个重要的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-实例"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、CyclicBarrier（同步屏障）"><span class="nav-number">2.</span> <span class="nav-text">二、CyclicBarrier（同步屏障）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-构造方法"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-await-方法"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 await()方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-实例"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、Semaphore（控制并发线程数）"><span class="nav-number">3.</span> <span class="nav-text">三、Semaphore（控制并发线程数）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-构造方法"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-两个重要的方法"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 两个重要的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-实例"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 实例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1010,6 +644,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

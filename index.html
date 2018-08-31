@@ -239,6 +239,169 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/30/类加载机制（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="卓灿和">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MyBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/30/类加载机制（一）/" itemprop="url">类加载机制（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-30T19:45:35+08:00">
+                2018-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/30/类加载机制（一）/" class="leancloud_visitors" data-flag-title="类加载机制（一）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="一、类加载过程"><a href="#一、类加载过程" class="headerlink" title="一、类加载过程"></a>一、类加载过程</h3><h4 id="1-加载"><a href="#1-加载" class="headerlink" title="1.加载"></a>1.加载</h4><p>​    （1）通过类的全限定名获取此类的二进制流。</p>
+<p>​    （2）将字节流所代表的静态存储结构转化为方法区的运行时数据结构。</p>
+<p>​    （3）生成一个代表这个类的java.lang.Class对象作为方法区这个类的各种数据访问入口</p>
+<h4 id="2-验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）"><a href="#2-验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）" class="headerlink" title="2.验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）"></a>2.验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）</h4><p>​    （1）文件格式验证（符合class规范）</p>
+<p>​    （2）元数据验证（检查其继承和实现以及是否合法化了）</p>
+<p>​    （3）字节码校验（确定程序语义合法、符合逻辑）</p>
+<p>​    （4）符号引用（类对自身以外的信息进行匹配性校验）</p>
+<h4 id="3-准备：正式分配内存并设置初始值（变量为该数据类型的零值，静态变量为被赋予的值）"><a href="#3-准备：正式分配内存并设置初始值（变量为该数据类型的零值，静态变量为被赋予的值）" class="headerlink" title="3.准备：正式分配内存并设置初始值（变量为该数据类型的零值，静态变量为被赋予的值）"></a>3.准备：正式分配内存并设置初始值（变量为该数据类型的零值，静态变量为被赋予的值）</h4><h4 id="4-解析：将符号引用替换为直接引用。"><a href="#4-解析：将符号引用替换为直接引用。" class="headerlink" title="4.解析：将符号引用替换为直接引用。"></a>4.解析：将符号引用替换为直接引用。</h4><blockquote>
+<p>什么是符号引用，什么是直接引用呢？简单的解释一下。<br>类A调用了类B但是在编译阶段类A不知道类B的实际内存地址，因此只能符号来代替类B，而变为直接引用后就可以直接获得类B在内存空间的位置了。</p>
+</blockquote>
+<p>​    （1）接口或类的解析</p>
+<p>​        ①判断如果是不是数组，直接将符号引用交给其类的类加载器去加载。</p>
+<p>​        ②如果是数组按照上述加载后生成数组。</p>
+<p>​        ③验证当前类是否有调用这个符号引用的权限。</p>
+<p>​    （2）字段解析：检查同名字段</p>
+<p>​        ①由自身开始自下往上检查其父类与接口是否有这个字段，有则返回，没有则报错。若同名字段同时出现在其父类和接口（父类的接口和自身的接口），则同样报错。</p>
+<p>​        ②检验对这个字段的访问权限。</p>
+<p>​    （3）类方法解析</p>
+<p>​        ①检查是类的方法还是接口的方法，是接口方法则报异常。（A中调用了B的方法，若B是接口）</p>
+<p>​        ②检查自身是否有这个方法（A中调用了B的方法，B中是否有这个方法）</p>
+<p>​        ③检查父类是否有这个方法（A中调用了B的方法，B的父类中是否有这个方法）</p>
+<p>​        ④检查父接口是否有这个方法，有则报抽象方法错误（AbstractMethodError）</p>
+<p>​        ⑤以上没有成功执行，则报没有这个方法错误（NoSuchMethodError）</p>
+<p>​        ⑥如果在第三步骤（包括第三步骤）成功执行了，则检查其权限。没权限则报错。（如：B的方法是private）</p>
+<p>​    （4）接口方法解析</p>
+<p>​        ①检查是类的方法还是接口的方法，是类方法则报异常。</p>
+<p>​        ②检查自身是否有这个方法</p>
+<p>​        ③检查父接口是否有这个方法</p>
+<p>​        ④没有则报没有这个方法错误。</p>
+<p>​        注意：接口方法默认都是public的，所以不存在访问权限问题，所以不会报非法接触错误（IllegalAccessError）</p>
+<h4 id="5-初始化：真正的执行了java代码"><a href="#5-初始化：真正的执行了java代码" class="headerlink" title="5.初始化：真正的执行了java代码"></a>5.初始化：真正的执行了java代码</h4><p>​    （1）调用\&lt;clinit>()方法，让编译器自动收集类中的类变量赋值动作和静态代码块中的语句。</p>
+<p>​    （2）虚拟机会保证子类的\&lt;clinit>()方法总是在父类的\&lt;clinit>()方法执行结束后执行。（所以父类的静态代码块中的语句会比子类先执行）</p>
+<p>​    （3）如果没有类变量赋值动作和静态代码块，则没有\&lt;clinit>()方法。</p>
+<h3 id="二、总结java程序初始化顺序"><a href="#二、总结java程序初始化顺序" class="headerlink" title="二、总结java程序初始化顺序"></a>二、总结java程序初始化顺序</h3><h4 id="1-父类的静态变量-gt-父类的静态代码块"><a href="#1-父类的静态变量-gt-父类的静态代码块" class="headerlink" title="1.父类的静态变量-&gt;父类的静态代码块"></a>1.父类的静态变量-&gt;父类的静态代码块</h4><h4 id="2-子类的静态变量-gt-子类的静态代码块"><a href="#2-子类的静态变量-gt-子类的静态代码块" class="headerlink" title="2.子类的静态变量-&gt;子类的静态代码块"></a>2.子类的静态变量-&gt;子类的静态代码块</h4><h4 id="3-父类的非静态变量-gt-父类的非静态代码块-gt-父类构造函数"><a href="#3-父类的非静态变量-gt-父类的非静态代码块-gt-父类构造函数" class="headerlink" title="3.父类的非静态变量-&gt;父类的非静态代码块-&gt;父类构造函数"></a>3.父类的非静态变量-&gt;父类的非静态代码块-&gt;父类构造函数</h4><h4 id="4-子类的非静态变量-gt-子类的非静态代码块-gt-子类构造函数"><a href="#4-子类的非静态变量-gt-子类的非静态代码块-gt-子类构造函数" class="headerlink" title="4.子类的非静态变量-&gt;子类的非静态代码块-&gt;子类构造函数"></a>4.子类的非静态变量-&gt;子类的非静态代码块-&gt;子类构造函数</h4>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/20/2018-8-20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -287,6 +450,17 @@
           
 
           
+          
+             <span id="/2018/08/20/2018-8-20/" class="leancloud_visitors" data-flag-title="同步辅助类">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -440,6 +614,17 @@
           
 
           
+          
+             <span id="/2018/08/17/JVM_GC(3)/" class="leancloud_visitors" data-flag-title="JVM垃圾回收机制（三）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -645,6 +830,17 @@
 
           
           
+             <span id="/2018/08/03/JVM_GC(2)/" class="leancloud_visitors" data-flag-title="JVM垃圾回收机制（二）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -798,6 +994,17 @@
 
           
           
+             <span id="/2018/08/01/JVM_GC(1)/" class="leancloud_visitors" data-flag-title="JVM垃圾回收机制（一）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -930,6 +1137,17 @@
 
           
           
+             <span id="/2018/07/29/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -1038,7 +1256,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1096,6 +1314,14 @@
 
   
 </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
 
 
   <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
@@ -1262,6 +1488,113 @@
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("ryicFRuMCvWRsk9zrdox1uVx-gzGzoHsz", "6oS2DATAH56mGfKxzFbLbpXq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 

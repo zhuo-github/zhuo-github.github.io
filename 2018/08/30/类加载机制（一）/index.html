@@ -79,26 +79,18 @@
 
 
 
-<meta name="description" content="一、垃圾回收（GC）算法1.1 标记-清除算法​    标记需回收对象，标记完后统一进行回收。 ​    回收前：  ​    回收后：  ​    缺点：①产生不连续空间。 1.2 复制算法​    等分两个内存空间，轮流将一个空间的存活对象复制到另外一个空间，然后清除另外一个空间。 ​    回收前：  ​    回收后：  ​    缺点：空间代价太高 1.3 标记-整理算法​    标记需">
+<meta name="description" content="一、类加载过程1.加载​    （1）通过类的全限定名获取此类的二进制流。 ​    （2）将字节流所代表的静态存储结构转化为方法区的运行时数据结构。 ​    （3）生成一个代表这个类的java.lang.Class对象作为方法区这个类的各种数据访问入口 2.验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）​    （1）文件格式验证（符合class规范） ​    （2）元数据验">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM垃圾回收机制（二）">
-<meta property="og:url" content="http://yoursite.com/2018/08/03/JVM_GC(2)/index.html">
+<meta property="og:title" content="类加载机制（一）">
+<meta property="og:url" content="http://yoursite.com/2018/08/30/类加载机制（一）/index.html">
 <meta property="og:site_name" content="MyBlog">
-<meta property="og:description" content="一、垃圾回收（GC）算法1.1 标记-清除算法​    标记需回收对象，标记完后统一进行回收。 ​    回收前：  ​    回收后：  ​    缺点：①产生不连续空间。 1.2 复制算法​    等分两个内存空间，轮流将一个空间的存活对象复制到另外一个空间，然后清除另外一个空间。 ​    回收前：  ​    回收后：  ​    缺点：空间代价太高 1.3 标记-整理算法​    标记需">
+<meta property="og:description" content="一、类加载过程1.加载​    （1）通过类的全限定名获取此类的二进制流。 ​    （2）将字节流所代表的静态存储结构转化为方法区的运行时数据结构。 ​    （3）生成一个代表这个类的java.lang.Class对象作为方法区这个类的各种数据访问入口 2.验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）​    （1）文件格式验证（符合class规范） ​    （2）元数据验">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/images/内存初始状况.jpg">
-<meta property="og:image" content="http://yoursite.com/images/标记-清除.jpg">
-<meta property="og:image" content="http://yoursite.com/images/复制前.jpg">
-<meta property="og:image" content="http://yoursite.com/images/复制后.jpg">
-<meta property="og:image" content="http://yoursite.com/images/内存初始状况.jpg">
-<meta property="og:image" content="http://yoursite.com/images/标记-整理.jpg">
-<meta property="og:image" content="http://yoursite.com/images/MinorGC.jpg">
-<meta property="og:updated_time" content="2018-08-20T07:12:42.990Z">
+<meta property="og:updated_time" content="2018-08-31T02:48:51.846Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM垃圾回收机制（二）">
-<meta name="twitter:description" content="一、垃圾回收（GC）算法1.1 标记-清除算法​    标记需回收对象，标记完后统一进行回收。 ​    回收前：  ​    回收后：  ​    缺点：①产生不连续空间。 1.2 复制算法​    等分两个内存空间，轮流将一个空间的存活对象复制到另外一个空间，然后清除另外一个空间。 ​    回收前：  ​    回收后：  ​    缺点：空间代价太高 1.3 标记-整理算法​    标记需">
-<meta name="twitter:image" content="http://yoursite.com/images/内存初始状况.jpg">
+<meta name="twitter:title" content="类加载机制（一）">
+<meta name="twitter:description" content="一、类加载过程1.加载​    （1）通过类的全限定名获取此类的二进制流。 ​    （2）将字节流所代表的静态存储结构转化为方法区的运行时数据结构。 ​    （3）生成一个代表这个类的java.lang.Class对象作为方法区这个类的各种数据访问入口 2.验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）​    （1）文件格式验证（符合class规范） ​    （2）元数据验">
 
 
 
@@ -128,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/08/03/JVM_GC(2)/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/30/类加载机制（一）/"/>
 
 
 
 
 
-  <title>JVM垃圾回收机制（二） | MyBlog</title>
+  <title>类加载机制（一） | MyBlog</title>
   
 
 
@@ -251,7 +243,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/03/JVM_GC(2)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/30/类加载机制（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="卓灿和">
@@ -268,7 +260,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JVM垃圾回收机制（二）</h1>
+          <h1 class="post-title" itemprop="name headline">类加载机制（一）</h1>
         
 
         <div class="post-meta">
@@ -280,8 +272,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-03T08:40:37+08:00">
-                2018-08-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-30T19:45:35+08:00">
+                2018-08-30
               </time>
             
 
@@ -298,7 +290,7 @@
 
           
           
-             <span id="/2018/08/03/JVM_GC(2)/" class="leancloud_visitors" data-flag-title="JVM垃圾回收机制（二）">
+             <span id="/2018/08/30/类加载机制（一）/" class="leancloud_visitors" data-flag-title="类加载机制（一）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -329,41 +321,40 @@
       
 
       
-        <h3 id="一、垃圾回收（GC）算法"><a href="#一、垃圾回收（GC）算法" class="headerlink" title="一、垃圾回收（GC）算法"></a>一、垃圾回收（GC）算法</h3><h4 id="1-1-标记-清除算法"><a href="#1-1-标记-清除算法" class="headerlink" title="1.1 标记-清除算法"></a>1.1 标记-清除算法</h4><p>​    标记需回收对象，标记完后统一进行回收。</p>
-<p>​    回收前：</p>
-<p><img src="/images/内存初始状况.jpg" alt=""></p>
-<p>​    回收后：</p>
-<p><img src="/images/标记-清除.jpg" alt=""></p>
-<p>​    缺点：①产生不连续空间。</p>
-<h4 id="1-2-复制算法"><a href="#1-2-复制算法" class="headerlink" title="1.2 复制算法"></a>1.2 复制算法</h4><p>​    等分两个内存空间，轮流将一个空间的存活对象复制到另外一个空间，然后清除另外一个空间。</p>
-<p>​    回收前：</p>
-<p><img src="/images/复制前.jpg" alt=""></p>
-<p>​    回收后：</p>
-<p><img src="/images/复制后.jpg" alt=""></p>
-<p>​    缺点：空间代价太高</p>
-<h4 id="1-3-标记-整理算法"><a href="#1-3-标记-整理算法" class="headerlink" title="1.3 标记-整理算法"></a>1.3 标记-整理算法</h4><p>​    标记需要回收对象，清除标记对象，然后对内存空间进行整理。</p>
-<p>​    回收前：</p>
-<p><img src="/images/内存初始状况.jpg" alt=""></p>
-<p><img src="/images/标记-整理.jpg" alt=""></p>
-<p>​    缺点：解决了内存碎片问题，但是效率变低了。</p>
-<h4 id="1-4-分代收集算法（重点）"><a href="#1-4-分代收集算法（重点）" class="headerlink" title="1.4 分代收集算法（重点）"></a>1.4 分代收集算法（重点）</h4><h5 id="1-4-1-新生代（采用复制算法）"><a href="#1-4-1-新生代（采用复制算法）" class="headerlink" title="1.4.1 新生代（采用复制算法）"></a>1.4.1 新生代（采用复制算法）</h5><p>​    伊甸园（Eden）：新对象总是在这里生成，然后经过一次垃圾回收（Minor GC）后，将其复制进存活区。（对象生成很频繁，有些对象朝生夕死）</p>
-<p>​    存活区（survivor ）：存活区有两个（s0/s1），每进行一次垃圾回收都会将Eden和其中一个存活（如：s0）取的对象复制到另外一个存活区（如：s1）中，然后清空Eden和被复制的存活区（如：Eden和s0被清空）</p>
-<h5 id="1-4-2-老年代（采用标记-整理算法）"><a href="#1-4-2-老年代（采用标记-整理算法）" class="headerlink" title="1.4.2 老年代（采用标记-整理算法）"></a>1.4.2 老年代（采用标记-整理算法）</h5><p>​    新生代经过N次回收后仍没有被清除则会进入老年代</p>
-<h5 id="1-4-3-新生代GC（Minor-GC）和全局GC（Full-GC）"><a href="#1-4-3-新生代GC（Minor-GC）和全局GC（Full-GC）" class="headerlink" title="1.4.3 新生代GC（Minor GC）和全局GC（Full GC）"></a>1.4.3 新生代GC（Minor GC）和全局GC（Full GC）</h5><p>​    Minor GC：发生在年轻代的垃圾回收动作。特点：速度快，发动频繁。</p>
-<p>​    Full GC：全局的垃圾回收，会对整个堆进行垃圾回收。</p>
-<p><img src="/images/MinorGC.jpg" alt=""></p>
-<p>​    老年区已满发动Full GC。</p>
-<p>​    老年区空间担保小于Eden每次进行复制所需空间的平均值发动Full GC。</p>
-<h3 id="二、减少GC的次数"><a href="#二、减少GC的次数" class="headerlink" title="二、减少GC的次数"></a>二、减少GC的次数</h3><p>​    ①对象不用时显示设为null。</p>
-<p>​    ②尽量少用System.gc()。</p>
-<p>​    ③尽量少用静态变量。</p>
-<p>​    ④尽量使用StringBuffer少用String</p>
-<p>​    ⑤分散对象创建或者删除</p>
-<p>​    ⑥尽量少用finalize()</p>
-<p>​    ⑦对于经常用到的图片可以使用软引用类型</p>
-<p>​    ⑧能用基本类型就不用引用类型</p>
-<p>​    ⑨增大 -Xmx的值（堆最大值）</p>
-
+        <h3 id="一、类加载过程"><a href="#一、类加载过程" class="headerlink" title="一、类加载过程"></a>一、类加载过程</h3><h4 id="1-加载"><a href="#1-加载" class="headerlink" title="1.加载"></a>1.加载</h4><p>​    （1）通过类的全限定名获取此类的二进制流。</p>
+<p>​    （2）将字节流所代表的静态存储结构转化为方法区的运行时数据结构。</p>
+<p>​    （3）生成一个代表这个类的java.lang.Class对象作为方法区这个类的各种数据访问入口</p>
+<h4 id="2-验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）"><a href="#2-验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）" class="headerlink" title="2.验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）"></a>2.验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）</h4><p>​    （1）文件格式验证（符合class规范）</p>
+<p>​    （2）元数据验证（检查其继承和实现以及是否合法化了）</p>
+<p>​    （3）字节码校验（确定程序语义合法、符合逻辑）</p>
+<p>​    （4）符号引用（类对自身以外的信息进行匹配性校验）</p>
+<h4 id="3-准备：正式分配内存并设置初始值（变量为该数据类型的零值，静态变量为被赋予的值）"><a href="#3-准备：正式分配内存并设置初始值（变量为该数据类型的零值，静态变量为被赋予的值）" class="headerlink" title="3.准备：正式分配内存并设置初始值（变量为该数据类型的零值，静态变量为被赋予的值）"></a>3.准备：正式分配内存并设置初始值（变量为该数据类型的零值，静态变量为被赋予的值）</h4><h4 id="4-解析：将符号引用替换为直接引用。"><a href="#4-解析：将符号引用替换为直接引用。" class="headerlink" title="4.解析：将符号引用替换为直接引用。"></a>4.解析：将符号引用替换为直接引用。</h4><blockquote>
+<p>什么是符号引用，什么是直接引用呢？简单的解释一下。<br>类A调用了类B但是在编译阶段类A不知道类B的实际内存地址，因此只能符号来代替类B，而变为直接引用后就可以直接获得类B在内存空间的位置了。</p>
+</blockquote>
+<p>​    （1）接口或类的解析</p>
+<p>​        ①判断如果是不是数组，直接将符号引用交给其类的类加载器去加载。</p>
+<p>​        ②如果是数组按照上述加载后生成数组。</p>
+<p>​        ③验证当前类是否有调用这个符号引用的权限。</p>
+<p>​    （2）字段解析：检查同名字段</p>
+<p>​        ①由自身开始自下往上检查其父类与接口是否有这个字段，有则返回，没有则报错。若同名字段同时出现在其父类和接口（父类的接口和自身的接口），则同样报错。</p>
+<p>​        ②检验对这个字段的访问权限。</p>
+<p>​    （3）类方法解析</p>
+<p>​        ①检查是类的方法还是接口的方法，是接口方法则报异常。（A中调用了B的方法，若B是接口）</p>
+<p>​        ②检查自身是否有这个方法（A中调用了B的方法，B中是否有这个方法）</p>
+<p>​        ③检查父类是否有这个方法（A中调用了B的方法，B的父类中是否有这个方法）</p>
+<p>​        ④检查父接口是否有这个方法，有则报抽象方法错误（AbstractMethodError）</p>
+<p>​        ⑤以上没有成功执行，则报没有这个方法错误（NoSuchMethodError）</p>
+<p>​        ⑥如果在第三步骤（包括第三步骤）成功执行了，则检查其权限。没权限则报错。（如：B的方法是private）</p>
+<p>​    （4）接口方法解析</p>
+<p>​        ①检查是类的方法还是接口的方法，是类方法则报异常。</p>
+<p>​        ②检查自身是否有这个方法</p>
+<p>​        ③检查父接口是否有这个方法</p>
+<p>​        ④没有则报没有这个方法错误。</p>
+<p>​        注意：接口方法默认都是public的，所以不存在访问权限问题，所以不会报非法接触错误（IllegalAccessError）</p>
+<h4 id="5-初始化：真正的执行了java代码"><a href="#5-初始化：真正的执行了java代码" class="headerlink" title="5.初始化：真正的执行了java代码"></a>5.初始化：真正的执行了java代码</h4><p>​    （1）调用\&lt;clinit>()方法，让编译器自动收集类中的类变量赋值动作和静态代码块中的语句。</p>
+<p>​    （2）虚拟机会保证子类的\&lt;clinit>()方法总是在父类的\&lt;clinit>()方法执行结束后执行。（所以父类的静态代码块中的语句会比子类先执行）</p>
+<p>​    （3）如果没有类变量赋值动作和静态代码块，则没有\&lt;clinit>()方法。</p>
+<h3 id="二、总结java程序初始化顺序"><a href="#二、总结java程序初始化顺序" class="headerlink" title="二、总结java程序初始化顺序"></a>二、总结java程序初始化顺序</h3><h4 id="1-父类的静态变量-gt-父类的静态代码块"><a href="#1-父类的静态变量-gt-父类的静态代码块" class="headerlink" title="1.父类的静态变量-&gt;父类的静态代码块"></a>1.父类的静态变量-&gt;父类的静态代码块</h4><h4 id="2-子类的静态变量-gt-子类的静态代码块"><a href="#2-子类的静态变量-gt-子类的静态代码块" class="headerlink" title="2.子类的静态变量-&gt;子类的静态代码块"></a>2.子类的静态变量-&gt;子类的静态代码块</h4><h4 id="3-父类的非静态变量-gt-父类的非静态代码块-gt-父类构造函数"><a href="#3-父类的非静态变量-gt-父类的非静态代码块-gt-父类构造函数" class="headerlink" title="3.父类的非静态变量-&gt;父类的非静态代码块-&gt;父类构造函数"></a>3.父类的非静态变量-&gt;父类的非静态代码块-&gt;父类构造函数</h4><h4 id="4-子类的非静态变量-gt-子类的非静态代码块-gt-子类构造函数"><a href="#4-子类的非静态变量-gt-子类的非静态代码块-gt-子类构造函数" class="headerlink" title="4.子类的非静态变量-&gt;子类的非静态代码块-&gt;子类构造函数"></a>4.子类的非静态变量-&gt;子类的非静态代码块-&gt;子类构造函数</h4>
       
     </div>
     
@@ -393,8 +384,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/01/JVM_GC(1)/" rel="next" title="JVM垃圾回收机制（一）">
-                <i class="fa fa-chevron-left"></i> JVM垃圾回收机制（一）
+              <a href="/2018/08/20/2018-8-20/" rel="next" title="同步辅助类">
+                <i class="fa fa-chevron-left"></i> 同步辅助类
               </a>
             
           </div>
@@ -402,10 +393,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/17/JVM_GC(3)/" rel="prev" title="JVM垃圾回收机制（三）">
-                JVM垃圾回收机制（三） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -528,7 +515,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、垃圾回收（GC）算法"><span class="nav-number">1.</span> <span class="nav-text">一、垃圾回收（GC）算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-标记-清除算法"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 标记-清除算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-复制算法"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 复制算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-标记-整理算法"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 标记-整理算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-分代收集算法（重点）"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 分代收集算法（重点）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-1-新生代（采用复制算法）"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 新生代（采用复制算法）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-2-老年代（采用标记-整理算法）"><span class="nav-number">1.4.2.</span> <span class="nav-text">1.4.2 老年代（采用标记-整理算法）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-3-新生代GC（Minor-GC）和全局GC（Full-GC）"><span class="nav-number">1.4.3.</span> <span class="nav-text">1.4.3 新生代GC（Minor GC）和全局GC（Full GC）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、减少GC的次数"><span class="nav-number">2.</span> <span class="nav-text">二、减少GC的次数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、类加载过程"><span class="nav-number">1.</span> <span class="nav-text">一、类加载过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-加载"><span class="nav-number">1.1.</span> <span class="nav-text">1.加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）"><span class="nav-number">1.2.</span> <span class="nav-text">2.验证：确保字节流信息符合虚拟机要求且安全。（非必要，但很重要）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-准备：正式分配内存并设置初始值（变量为该数据类型的零值，静态变量为被赋予的值）"><span class="nav-number">1.3.</span> <span class="nav-text">3.准备：正式分配内存并设置初始值（变量为该数据类型的零值，静态变量为被赋予的值）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-解析：将符号引用替换为直接引用。"><span class="nav-number">1.4.</span> <span class="nav-text">4.解析：将符号引用替换为直接引用。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-初始化：真正的执行了java代码"><span class="nav-number">1.5.</span> <span class="nav-text">5.初始化：真正的执行了java代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、总结java程序初始化顺序"><span class="nav-number">2.</span> <span class="nav-text">二、总结java程序初始化顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-父类的静态变量-gt-父类的静态代码块"><span class="nav-number">2.1.</span> <span class="nav-text">1.父类的静态变量-&gt;父类的静态代码块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-子类的静态变量-gt-子类的静态代码块"><span class="nav-number">2.2.</span> <span class="nav-text">2.子类的静态变量-&gt;子类的静态代码块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-父类的非静态变量-gt-父类的非静态代码块-gt-父类构造函数"><span class="nav-number">2.3.</span> <span class="nav-text">3.父类的非静态变量-&gt;父类的非静态代码块-&gt;父类构造函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-子类的非静态变量-gt-子类的非静态代码块-gt-子类构造函数"><span class="nav-number">2.4.</span> <span class="nav-text">4.子类的非静态变量-&gt;子类的非静态代码块-&gt;子类构造函数</span></a></li></ol></li></ol></div>
             
 
           </div>
